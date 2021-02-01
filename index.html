@@ -1,0 +1,126 @@
+<?php include_once 'base.php';?>
+<?php
+include_once 'base.php';
+require 'config.php';
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>《Marvel未來之戰》角色資訊站</title>
+    <!-- CSS start -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <!-- CSS end -->
+    <!-- JavaScript start -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-3.5.1.min.js"></script>
+    <!-- JavaScript end -->
+    <style>
+        .adding-form table tr td {
+            padding: .3rem;
+        }
+
+        table tr td label {
+            border: 1px solid #99999955;
+            border-radius: 5px;
+            margin: .3rem;
+            padding: .1rem .3rem;
+        }
+
+        table tr td label:hover {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="section header m-1">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab"
+                    aria-controls="home" aria-selected="true">首頁</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab"
+                    aria-controls="profile" aria-selected="false">新增角色</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="contact-tab" data-bs-toggle="tab" href="#contact" role="tab"
+                    aria-controls="contact" aria-selected="false">Contact</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <!-- 首頁頁籤 Start -->
+            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="container">
+                    <div class="row">
+                        <div id="charactor-list" class="container d-flex justify-content-left flex-wrap"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- 首頁頁籤 End -->
+            <!-- 新增角色頁籤 Start -->
+            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <form action="#" method="get" id="adding-form" class="adding-form"
+                    style="display:flex;justify-content: cneter;align-items: center;flex-direction: column;">
+                    <table class="m-5">
+                        <tr>
+                            <td>角色名稱：</td>
+                            <td><input type="text" id="charactorName" name="charactorName" placeholder="角色名稱...." style="border:none;"><br></td>
+                        </tr>
+                        <tr>
+                            <td>階　　級：</td>
+                            <td>
+                                <label><input type="radio" name="tierLevel" value="2">T2</label>
+                                <label><input type="radio" name="tierLevel" value="5">T2.5</label>
+                                <label><input type="radio" name="tierLevel" value="3" checked>T3</label>
+                                <label><input type="radio" name="tierLevel" value="1">T1</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>屬　　性：</td>
+                            <td>
+                                <label><input type="radio" name="attribute" value="1" checked>近戰</label>
+                                <label><input type="radio" name="attribute" value="2">爆破</label>
+                                <label><input type="radio" name="attribute" value="3">速度</label>
+                                <label><input type="radio" name="attribute" value="4">全宇宙</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input class="btn btn-primary" type="submit" value="新增"></input>
+                                <input class="btn btn-danger" type="reset" id="resetButton" value="重置">
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <!-- 新增角色頁籤 End -->
+            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">Contact</div>
+        </div>
+    </div>
+    <script>
+        $("#adding-form").on('submit', function (event) {
+            event.preventDefault();
+            $.post('api/adding.php', { 'data': $(this).serialize() }, function (result) {
+                console.log(result);
+                if (result == 1) {
+                    // 成功
+                    $("#resetButton").trigger('click');
+                    $("#charactorName").focus();
+                }
+            })
+        })
+
+        $(function () {
+            $.get('frontend/charactors.php', function (result) {
+                $("#charactor-list").html(result);
+            })
+        })
+    </script>
+</body>
+
+</html>
