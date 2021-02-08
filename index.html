@@ -164,9 +164,6 @@
             $("#modal-basic").fadeOut(100);
         }
 
-        $("#pills-basic").on('click', () => {
-            charactors();
-        })
         $(function () {
             charactors();
         })
@@ -180,42 +177,25 @@
             })
         }
 
-        function editQuality(id) {
-            $.post('api/edit-quality.php', {
+        function editCharactor(id) {
+            $.post('api/edit-charactor.php', {
                 'id': id,
                 'v1': $(`#v1${id}`).val(),
                 'v2': $(`#v2${id}`).val(),
                 'v3': $(`#v3${id}`).val(),
-                'v4': $(`#v4${id}`).val()
+                'v4': $(`#v4${id}`).val(),
+                'e1': $(`#e1${id}`).val(),
+                'e2': $(`#e2${id}`).val(),
+                'e3': $(`#e3${id}`).val(),
+                'e4': $(`#e4${id}`).val()
             }, (result) => {
                 if (result == 1) {
                     // 成功
+                    alert("更新成功");
                     charactors();
                 } else {
                     // 失敗
-                    console.log(result)
-                    alert('Something went wrong, try again later.');
-                    charactors();
-                }
-            })
-        }
-
-        function editEquip(id) {
-            $.post('api/edit-equipment.php', {
-                'id': id,
-                'v1': $(`#equip1${id}`).val(),
-                'v2': $(`#equip2${id}`).val(),
-                'v3': $(`#equip3${id}`).val(),
-                'v4': $(`#equip4${id}`).val()
-            }, (result) => {
-                if (result == 1) {
-                    // 成功
-                    charactors();
-                } else {
-                    // 失敗
-                    console.log(result)
-                    alert('Something went wrong, try again later.');
-                    charactors();
+                    alert("操作錯誤");
                 }
             })
         }
