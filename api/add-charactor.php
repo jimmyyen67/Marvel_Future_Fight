@@ -6,8 +6,8 @@ $data = array();
 
 if (!empty($_POST['data'])) {
     parse_str($_POST['data'], $data);
-    $db = new DB('charactors');
-    $db->save($data);
+    $charactors = new DB('charactors');
+    $charactors->save($data);
     echo 1;
 } else {
     echo 0;

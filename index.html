@@ -8,7 +8,7 @@
     <link rel=icon href=favicon.png sizes="16x16" type="image/png">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500&family=Yusei+Magic&display=swap"
-          rel="stylesheet">
+        rel="stylesheet">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script src="js/jquery-3.5.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -47,7 +47,12 @@
         }
 
         .quality input {
-            width: 5rem;
+            width: 3.5rem;
+        }
+
+        .equipment input[type=text] {
+            text-align: center;
+            width: 2rem;
         }
 
         .modal-content {
@@ -69,106 +74,119 @@
 
         .charactor {
             display: flex;
-            justify-content: space-evenly;
+            justify-content: start;
+        }
+
+        .card-info {
+            display: flex;
+        }
+
+        .line {
+            margin: 0 0.5rem;
+            height: 130px;
+            width: 1.5px;
+            border: 1px solid #3333;
         }
     </style>
 </head>
 
 <body>
-<!-- Header start -->
-<div id="header" class="header"></div>
-<!-- Header End -->
-<!-- Modal Start -->
-<div id="modal-basic" class="modal-basic" style="display:none;"></div>
-<!-- Modal End -->
-<!-- Main -->
-<div class="tab-content" id="pills-tabContent">
-    <!--    角色列表 Start-->
-    <div class="tab-pane fade show active" id="pills-basic" role="tabpanel" aria-labelledby="pills-basic-tab"></div>
-    <!--    角色列表 End-->
-    <div class="tab-pane fade" id="pills-equipment" role="tabpanel" aria-labelledby="pills-equipment-tab">烏魯</div>
-    <div class="tab-pane fade" id="pills-special" role="tabpanel" aria-labelledby="pills-special-tab">特裝</div>
-    <div class="tab-pane fade" id="pills-isotope" role="tabpanel" aria-labelledby="pills-isotope-tab">IOS-8</div>
-</div>
-<!-- Main End -->
+    <!-- Header start -->
+    <div class="container">
+        <div id="header" class="header"></div>
+    </div>
+    <!-- Header End -->
+    <!-- Modal Start -->
+    <div id="modal-basic" class="modal-basic" style="display:none;"></div>
+    <!-- Modal End -->
+    <!-- Main -->
+    <div class="tab-content" id="pills-tabContent">
+        <!--    角色列表 Start-->
+        <div class="tab-pane fade show active" id="pills-basic" role="tabpanel"
+            aria-labellecharactorsy="pills-basic-tab"></div>
+        <!--    角色列表 End-->
+        <div class="tab-pane fade" id="pills-equipment" role="tabpanel" aria-labellecharactorsy="pills-equipment-tab">烏魯
+        </div>
+        <div class="tab-pane fade" id="pills-special" role="tabpanel" aria-labellecharactorsy="pills-special-tab">特裝
+        </div>
+        <div class="tab-pane fade" id="pills-isotope" role="tabpanel" aria-labellecharactorsy="pills-isotope-tab">IOS-8
+        </div>
+    </div>
+    <!-- Main End -->
 
-<!-- JavaScript -->
-<script>
-    // Navbar Buttons
-    $(function () {
-        $.get('template/header.php', (result) => {
-            $("#header").html(result);
+    <!-- JavaScript -->
+    <script>
+        // Navbar Buttons
+        $(function () {
+            $.get('template/header.php', (result) => {
+                $("#header").html(result);
+            })
         })
-    })
 
-    // Open Modal
-    function openModal() {
-        $.get('modal/adding-form.html', (res) => {
-            $("#modal-basic").html(res);
-            $("#modal-basic").fadeIn(100);
+        // Open Modal
+        function openModal() {
+            $.get('modal/adding-form.html', (res) => {
+                $("#modal-basic").html(res);
+                $("#modal-basic").fadeIn(100);
 
-            $("#modal-basic").on('click', () => {
-                closeModal();
-            })
+                $("#modal-basic").on('click', () => {
+                    closeModal();
+                })
 
-            $(window).on("keyup", (event) => {
-                if (event.which == 27) closeModal();
-            })
+                $(window).on("keyup", (event) => {
+                    if (event.which == 27) closeModal();
+                })
 
-            $("#adding-form").on('click', (event) => {
-                event.stopPropagation();
-            })
+                $("#adding-form").on('click', (event) => {
+                    event.stopPropagation();
+                })
 
-            // adding-form submit action
-            $(function () {
-                $("#adding-form").on('submit', function (event) {
-                    event.preventDefault();
-                    $.post('api/add-charactor.php', {
-                        'data': $(this).serialize()
-                    }, (result) => {
-                        if (result == 0) alert("資料有誤，請重新再試一次");
-                        if (result == 1) {
-                            charactors();
-                            $("#modal-basic").fadeOut(100);
-                        }
+                // adding-form submit action
+                $(function () {
+                    $("#adding-form").on('submit', function (event) {
+                        event.preventDefault();
+                        $.post('api/add-charactor.php', {
+                            'data': $(this).serialize()
+                        }, (result) => {
+                            if (result == 0) alert("資料有誤，請重新再試一次");
+                            if (result == 1) {
+                                charactors();
+                                $("#modal-basic").fadeOut(100);
+                            }
+                        })
                     })
                 })
             })
+        }
+
+        // Close Modal
+        function closeModal() {
+            $("#modal-basic").fadeOut(100);
+        }
+
+        $("#pills-basic").on('click', () => {
+            charactors();
         })
-    }
+        $(function () {
+            charactors();
+        })
 
-    // Close Modal
-    function closeModal() {
-        $("#modal-basic").fadeOut(100);
-    }
-
-    $(function () {
-        charactors();
-    })
-
-    // charactors loading
-    function charactors() {
-        $.get('api/load-charactors.php', (data) => {
-            $.get('template/charactor.php', {'data': data}, (result) => {
-                $("#pills-basic").html(result);
+        // charactors loading
+        function charactors() {
+            $.get('api/load-charactors.php', (data) => {
+                $.get('template/charactor.php', { 'data': data }, (result) => {
+                    $("#pills-basic").html(result);
+                })
             })
-        })
-    }
+        }
 
-    function editQuality(id) {
-        let v1 = $(`#v1${id}`).val();
-        let v2 = $(`#v2${id}`).val();
-        let v3 = $(`#v3${id}`).val();
-        let v4 = $(`#v4${id}`).val();
-        let check = confirm("確定要變更角色數值？");
-        if (check) {
-
+        function editQuality(id) {
             $.post('api/edit-quality.php', {
                 'id': id,
-                'v1': v1,
-                'v2': v2,
-                'v3': v3,
-                'v4': v4
+                'v1': $(`#v1${id}`).val(),
+                'v2': $(`#v2${id}`).val(),
+                'v3': $(`#v3${id}`).val(),
+                'v4': $(`#v4${id}`).val()
             }, (result) => {
                 if (result == 1) {
                     // 成功
@@ -181,8 +199,27 @@
                 }
             })
         }
-    }
-</script>
+
+        function editEquip(id) {
+            $.post('api/edit-equipment.php', {
+                'id': id,
+                'v1': $(`#equip1${id}`).val(),
+                'v2': $(`#equip2${id}`).val(),
+                'v3': $(`#equip3${id}`).val(),
+                'v4': $(`#equip4${id}`).val()
+            }, (result) => {
+                if (result == 1) {
+                    // 成功
+                    charactors();
+                } else {
+                    // 失敗
+                    console.log(result)
+                    alert('Something went wrong, try again later.');
+                    charactors();
+                }
+            })
+        }
+    </script>
 </body>
 
 </html>
