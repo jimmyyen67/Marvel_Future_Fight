@@ -2,8 +2,8 @@
 require "../func.php";
 include "../config.php";
 
-$charactors = new DB('charactors');
-$datas = $charactors->all();
+$Charactors = new DB('charactors');
+$datas = $Charactors->all();
 $Equip = new DB('equipment');
 
 foreach ($datas as $key => $array) {

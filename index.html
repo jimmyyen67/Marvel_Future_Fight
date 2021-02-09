@@ -87,6 +87,10 @@
             width: 1.5px;
             border: 1px solid #3333;
         }
+
+        .special input[type=text] {
+            width: 100px;
+        }
     </style>
 </head>
 
@@ -101,14 +105,16 @@
     <!-- Modal End -->
     <!-- Main -->
     <div class="tab-content" id="pills-tabContent">
-        <!--    角色列表 Start-->
+        <!-- 角色列表 Start -->
         <div class="tab-pane fade show active" id="pills-basic" role="tabpanel"
             aria-labellecharactorsy="pills-basic-tab"></div>
-        <!--    角色列表 End-->
+        <!-- 角色列表 End -->
         <div class="tab-pane fade" id="pills-equipment" role="tabpanel" aria-labellecharactorsy="pills-equipment-tab">烏魯
         </div>
+        <!-- 特殊裝備 start -->
         <div class="tab-pane fade" id="pills-special" role="tabpanel" aria-labellecharactorsy="pills-special-tab">特裝
         </div>
+        <!-- 特殊裝備 end -->
         <div class="tab-pane fade" id="pills-isotope" role="tabpanel" aria-labellecharactorsy="pills-isotope-tab">IOS-8
         </div>
     </div>
@@ -166,13 +172,22 @@
 
         $(function () {
             charactors();
+            specials();
         })
 
         // charactors loading
         function charactors() {
             $.get('api/load-charactors.php', (data) => {
-                $.get('template/charactor.php', { 'data': data }, (result) => {
+                $.get('template/charactor.php', {'data': data}, (result) => {
                     $("#pills-basic").html(result);
+                })
+            })
+        }
+
+        function specials() {
+            $.get('api/load-specials.php', (data) => {
+                $.get('template/specials.php', {'data': data}, (result) => {
+                    $("#pills-special").html(result);
                 })
             })
         }
