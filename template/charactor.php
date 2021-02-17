@@ -1,6 +1,6 @@
 <?php
 include "../config.php";
-$datas = json_decode($_GET['data'], true);
+$datas = json_decode($_POST['data'], true);
 ?>
 <div class="container">
     <div class="row charactor">
@@ -39,7 +39,7 @@ $datas = json_decode($_GET['data'], true);
             $ignoreColor = ($value['ignore_defence'] == '50.00') ? 'text-danger' : 'text-black-50';
             $coolColor = ($value['cool_down'] == '50.00') ? 'text-danger' : 'text-black-50';
         ?>
-            <div class="card col-sm-12 col-md-6 col-lg-4 col-xxl-3" style="width:auto;margin:.5rem;">
+            <div class="card col-sm-12 col-md-6 col-lg-4 col-xxl-3">
                 <div class="card-body">
                     <p class="h5 card-title text-dark"><?= $value['name'] ?></p>
                     <p class="h6 card-subtitle mb-2 text-muted">

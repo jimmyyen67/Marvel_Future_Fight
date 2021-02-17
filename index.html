@@ -89,7 +89,18 @@
         }
 
         .special input[type=text] {
-            width: 100px;
+            width: 100%;
+        }
+
+        .pointer:hover {
+            cursor: pointer;
+        }
+
+        .value-1 input,
+        .value-2 input,
+        .value-3 input,
+        .value-4 input {
+            margin: 0 .1rem;
         }
     </style>
 </head>
@@ -178,7 +189,7 @@
         // charactors loading
         function charactors() {
             $.get('api/load-charactors.php', (data) => {
-                $.get('template/charactor.php', {'data': data}, (result) => {
+                $.post('template/charactor.php', { 'data': data }, (result) => {
                     $("#pills-basic").html(result);
                 })
             })
@@ -186,7 +197,7 @@
 
         function specials() {
             $.get('api/load-specials.php', (data) => {
-                $.get('template/specials.php', {'data': data}, (result) => {
+                $.post('template/specials.php', { 'data': data }, (result) => {
                     $("#pills-special").html(result);
                 })
             })
