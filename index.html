@@ -90,6 +90,8 @@
 
         .special input[type=text] {
             width: 100%;
+            margin: .1rem 0;
+            border: .5px solid #3331;
         }
 
         .pointer:hover {
@@ -101,6 +103,15 @@
         .value-3 input,
         .value-4 input {
             margin: 0 .1rem;
+        }
+
+        input[type=submit]:focus,
+        input[type=reset]:focus {
+            outline: none;
+        }
+
+        .isotope input[type=checkbox] {
+            cursor: pointer;
         }
     </style>
 </head>
@@ -116,17 +127,18 @@
     <!-- Modal End -->
     <!-- Main -->
     <div class="tab-content" id="pills-tabContent">
-        <!-- 角色列表 Start -->
-        <div class="tab-pane fade show active" id="pills-basic" role="tabpanel"
-            aria-labellecharactorsy="pills-basic-tab"></div>
-        <!-- 角色列表 End -->
-        <div class="tab-pane fade" id="pills-equipment" role="tabpanel" aria-labellecharactorsy="pills-equipment-tab">烏魯
+        <!-- 角色列表 -->
+        <div class="tab-pane fade show active" id="pills-basic" role="tabpanel" aria-labellecharactorsy="pills-basic-tab">
         </div>
-        <!-- 特殊裝備 start -->
+        <!-- 特殊裝備 -->
         <div class="tab-pane fade" id="pills-special" role="tabpanel" aria-labellecharactorsy="pills-special-tab">特裝
         </div>
-        <!-- 特殊裝備 end -->
-        <div class="tab-pane fade" id="pills-isotope" role="tabpanel" aria-labellecharactorsy="pills-isotope-tab">IOS-8
+        <!-- 同位素-8 -->
+        <div class="tab-pane fade" id="pills-isotope" role="tabpanel"
+            aria-labellecharactorsy="pills-isotope-tab">IOS-8
+        </div>
+        <!-- 強化烏魯 -->
+        <div class="tab-pane fade" id="pills-equipment" role="tabpanel" aria-labellecharactorsy="pills-equipment-tab">烏魯
         </div>
     </div>
     <!-- Main End -->
@@ -168,6 +180,7 @@
                             if (result == 0) alert("資料有誤，請重新再試一次");
                             if (result == 1) {
                                 charactors();
+                                specials();
                                 $("#modal-basic").fadeOut(100);
                             }
                         })
@@ -184,6 +197,7 @@
         $(function () {
             charactors();
             specials();
+            isotope();
         })
 
         // charactors loading
@@ -195,6 +209,7 @@
             })
         }
 
+        // specials loading
         function specials() {
             $.get('api/load-specials.php', (data) => {
                 $.post('template/specials.php', { 'data': data }, (result) => {
@@ -203,9 +218,21 @@
             })
         }
 
+        // isotope loading
+        function isotope() {
+            $.get('api/load-isotope.php', (data) => {
+                $.post('template/isotope.php', { 'data': data }, (result) => {
+                    $("#pills-isotope").html(result);
+                })
+            })
+        }
+
         function editCharactor(id) {
             $.post('api/edit-charactor.php', {
                 'id': id,
+                'attribute': $(`#attribute${id}`).val(),
+                'tier': $(`#tier${id}`).val(),
+                'level': $(`#level${id}`).val(),
                 'v1': $(`#v1${id}`).val(),
                 'v2': $(`#v2${id}`).val(),
                 'v3': $(`#v3${id}`).val(),
@@ -215,6 +242,7 @@
                 'e3': $(`#e3${id}`).val(),
                 'e4': $(`#e4${id}`).val()
             }, (result) => {
+                console.log(result)
                 if (result == 1) {
                     // 成功
                     alert("更新成功");

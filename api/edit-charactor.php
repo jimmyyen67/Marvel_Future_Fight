@@ -2,10 +2,14 @@
 include "../func.php";
 
 if (!empty($_POST)) {
+
     $Charactor = new DB('charactors');
     $Equipment = new DB('equipment');
     // 角色數值
     $dataC = $Charactor->find($_POST['id']);
+    $dataC['attribute'] = $_POST['attribute'];
+    $dataC['tier'] = $_POST['tier'];
+    $dataC['level'] = $_POST['level'];
     $dataC['critical_hit'] = $_POST['v1'];
     $dataC['critical_rate'] = $_POST['v2'];
     $dataC['ignore_defence'] = $_POST['v3'];
@@ -20,6 +24,8 @@ if (!empty($_POST)) {
     $dataE['equip_4'] = $_POST['e4'];
     $Equipment->save($dataE);
     echo 1;
+    exit;
 } else {
     echo 0;
+    exit;
 }

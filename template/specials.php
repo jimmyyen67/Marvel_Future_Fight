@@ -13,7 +13,7 @@ $datas = json_decode($_POST['data'], true);
                     <p class="h5 card-title text-dark"><?= $value['name'] ?></p>
                     <div class="card-info">
                         <!-- 特殊裝備 start -->
-                        <div class="special p-1 text-black-50 w-100">
+                        <div class="special text-black-50 w-100">
                             <?php if ($value['special'] == 999) { ?>
                                 <form action"#" method="post" class="special-form">
                                     <small>

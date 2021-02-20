@@ -3,7 +3,7 @@ require "../func.php";
 include "../config.php";
 
 $Charactors = new DB('charactors');
-$datas = $Charactors->all();
+$datas = $Charactors->all([],'order by tier desc');
 $Equip = new DB('equipment');
 
 foreach ($datas as $key => $array) {
